@@ -1,0 +1,1 @@
+export { seoMeta } from "./meta";

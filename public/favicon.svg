@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0  0 0.94 0 0 0  0 0 1 0 0  0 0 0 0.4 0" result="colored"/>
+      <feMerge>
+        <feMergeNode in="colored"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="32" height="32" rx="6" fill="#040310"/>
+  <text
+    x="16" y="23"
+    text-anchor="middle"
+    font-family="Rubik, Arial, sans-serif"
+    font-weight="700"
+    font-size="22"
+    fill="#00F0FF"
+    filter="url(#glow)"
+  >U</text>
+</svg>

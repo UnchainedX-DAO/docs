@@ -1,0 +1,45 @@
+{
+	"name": "unchained-x-dao",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "react-router build",
+		"cf-typegen": "wrangler types",
+		"deploy": "npm run build && wrangler deploy",
+		"dev": "react-router dev",
+		"postinstall": "npm run cf-typegen",
+		"preview": "npm run build && vite preview",
+		"typecheck": "npm run cf-typegen && react-router typegen && tsc -b",
+		"lint": "biome check .",
+		"lint:fix": "biome check --write .",
+		"format": "biome format --write ."
+	},
+	"dependencies": {
+		"@react-three/drei": "^10.7.7",
+		"@react-three/fiber": "^9.5.0",
+		"gsap": "^3.14.2",
+		"isbot": "^5.1.36",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
+		"react-router": "7.13.2",
+		"remix-utils": "^9.3.1",
+		"styled-components": "^6.4.1",
+		"three": "^0.183.2"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.9",
+		"@cloudflare/vite-plugin": "^1.29.1",
+		"@react-router/dev": "7.13.2",
+		"@tailwindcss/vite": "^4.2.2",
+		"@types/node": "^22",
+		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
+		"@types/three": "^0.183.1",
+		"sharp": "^0.34.5",
+		"tailwindcss": "^4.2.2",
+		"typescript": "^5.9.3",
+		"vite": "^7.1.7",
+		"vite-tsconfig-paths": "^5.1.4",
+		"wrangler": "^4.75.0"
+	}
+}
