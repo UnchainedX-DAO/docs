@@ -5,11 +5,11 @@
 	"scripts": {
 		"build": "react-router build",
 		"cf-typegen": "wrangler types",
-		"deploy": "npm run build && wrangler deploy",
+		"deploy": "bun run build && wrangler deploy",
 		"dev": "react-router dev",
-		"postinstall": "npm run cf-typegen",
-		"preview": "npm run build && vite preview",
-		"typecheck": "npm run cf-typegen && react-router typegen && tsc -b",
+		"postinstall": "bun run cf-typegen",
+		"preview": "bun run build && vite preview",
+		"typecheck": "bun run cf-typegen && react-router typegen && tsc -b",
 		"lint": "biome check .",
 		"lint:fix": "biome check --write .",
 		"format": "biome format --write ."
@@ -17,12 +17,15 @@
 	"dependencies": {
 		"@react-three/drei": "^10.7.7",
 		"@react-three/fiber": "^9.5.0",
+		"@sanity/client": "^7.21.0",
+		"@sanity/image-url": "^2.1.1",
 		"gsap": "^3.14.2",
 		"isbot": "^5.1.36",
 		"react": "^19.2.4",
 		"react-dom": "^19.2.4",
 		"react-router": "7.13.2",
 		"remix-utils": "^9.3.1",
+		"sanity": "^5.22.0",
 		"styled-components": "^6.4.1",
 		"three": "^0.183.2"
 	},

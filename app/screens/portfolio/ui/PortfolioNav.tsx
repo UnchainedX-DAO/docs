@@ -1,5 +1,3 @@
-import { playClick, playHover } from "~/core/adapters/audio";
-
 interface Props {
   currentIndex: number;
   total: number;
@@ -47,15 +45,11 @@ export default function PortfolioNav({ currentIndex, total, onPrev, onNext }: Pr
     <div className="hidden md:flex fixed z-20 top-1/2 -translate-y-1/2 left-0 right-0 justify-between px-4 md:px-8 pointer-events-none">
       <button
         type="button"
-        onClick={() => {
-          playClick();
-          onPrev();
-        }}
+        onClick={() => onPrev()}
         disabled={prevDisabled}
         className="group pointer-events-auto w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300"
         style={arrowStyle(prevDisabled)}
         onMouseEnter={(e) => {
-          playHover();
           if (!prevDisabled) applyHoverActive(e.currentTarget);
         }}
         onMouseLeave={(e) => {
@@ -69,15 +63,11 @@ export default function PortfolioNav({ currentIndex, total, onPrev, onNext }: Pr
 
       <button
         type="button"
-        onClick={() => {
-          playClick();
-          onNext();
-        }}
+        onClick={() => onNext()}
         disabled={nextDisabled}
         className="group pointer-events-auto w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300"
         style={arrowStyle(nextDisabled)}
         onMouseEnter={(e) => {
-          playHover();
           if (!nextDisabled) applyHoverActive(e.currentTarget);
         }}
         onMouseLeave={(e) => {

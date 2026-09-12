@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { playSwipe } from "~/core/adapters/audio";
 
 interface CarouselNav {
   currentIndex: number;
@@ -21,7 +20,6 @@ export function useCarouselNav(length: number, options: Options = {}): CarouselN
   const goTo = useCallback(
     (idx: number) => {
       const clamped = Math.max(0, Math.min(length - 1, idx));
-      if (clamped !== currentIndexRef.current) playSwipe();
       setCurrentIndex(clamped);
       currentIndexRef.current = clamped;
     },

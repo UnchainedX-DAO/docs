@@ -1,4 +1,3 @@
-import { playClick } from "~/core/adapters/audio";
 import type { Project } from "~/core/adapters/sanity";
 
 interface Props {
@@ -16,10 +15,7 @@ export default function PortfolioPagination({ projects, currentIndex, onSelect }
           <button
             key={`pag-${project._id}`}
             type="button"
-            onClick={() => {
-              playClick();
-              onSelect(i);
-            }}
+            onClick={() => onSelect(i)}
             className="group relative flex items-center transition-all duration-500 ease-out"
             style={{ height: "32px" }}
           >

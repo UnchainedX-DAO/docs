@@ -1,4 +1,3 @@
-import { playClick } from "~/core/adapters/audio";
 import type { ProjectStatus } from "~/core/adapters/sanity";
 
 const STATUS_OPTIONS: (ProjectStatus | "All")[] = ["All", "In Dev", "Live", "Archived"];
@@ -51,10 +50,7 @@ export default function PortfolioHeader({
             <button
               key={status}
               type="button"
-              onClick={() => {
-                playClick();
-                onStatusChange(status);
-              }}
+              onClick={() => onStatusChange(status)}
               className="text-[11px] uppercase tracking-[0.2em] font-mono px-4 py-1.5 rounded-full transition-all duration-300"
               style={{
                 backgroundColor: isActive ? "rgba(0,240,255,0.1)" : "rgba(255,255,255,0.03)",

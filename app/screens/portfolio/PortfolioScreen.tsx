@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLoaderData } from "react-router";
 import { ClientOnly } from "remix-utils/client-only";
 import Footer from "~/components/dom/layout/Footer";
-import { setAmbientProfile } from "~/core/adapters/audio";
 import type { ProjectStatus } from "~/core/adapters/sanity";
 import { useCarouselNav } from "~/hooks/useCarouselNav";
 import { useFooterAnimation } from "~/hooks/useFooterAnimation";
@@ -17,10 +16,6 @@ export default function PortfolioScreen() {
   const [activeStatus, setActiveStatus] = useState<ProjectStatus | "All">("All");
   const [searchQuery, setSearchQuery] = useState("");
   const footerRef = useFooterAnimation();
-
-  useEffect(() => {
-    setAmbientProfile("portfolio");
-  }, []);
 
   const filtered = projects.filter((p) => {
     const statusMatch = activeStatus === "All" || p.status === activeStatus;

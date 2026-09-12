@@ -7,9 +7,20 @@ export interface Project {
   description: string;
   status: ProjectStatus;
   categories: string[];
-  /** Resolved image URL (undefined → GenerativeThumb fallback in the scene). */
-  thumbnail?: string;
+  thumbnail?: { asset: { _ref: string } };
   url?: string;
   topics: string[];
   order: number;
+}
+
+export interface TeamMember {
+  name: string;
+  role: string;
+  animal: string;
+  isHiring?: boolean;
+  links?: {
+    twitter?: string;
+    github?: string;
+    website?: string;
+  };
 }
