@@ -27,22 +27,16 @@ const WebGPUCanvas: FC<Props> = ({ children, className, dpr, frameloop = "always
       frameloop={frameloop}
       camera={{ position: [0, 0, 5], fov: cameraFov }}
       gl={async (props) => {
-        try {
-          const renderer = new THREE.WebGPURenderer({
-            ...(props as WebGPURendererParameters),
-            antialias: true,
-          });
-          await renderer.init();
-          renderer.localClippingEnabled = true;
-          return renderer;
-        } catch (e) {
-          console.warn("[WebGPU] Failed to init, falling back to WebGL:", e);
-          return new THREE.WebGLRenderer({
-            canvas: props.canvas as HTMLCanvasElement,
-            antialias: true,
-            alpha: true,
-          });
-        }
+        // WebGPURenderer auto-falls back to a WebGL2 backend when WebGPU is
+        // unavailable, so no manual WebGLRenderer fallback is needed.
+        const renderer = new THREE.WebGPURenderer({
+          ...(props as WebGPURendererParameters),
+          antialias: true,
+          forceWebGL: false,
+        });
+        await renderer.init();
+        renderer.localClippingEnabled = true;
+        return renderer;
       }}
     >
       {children}
