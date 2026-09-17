@@ -54,7 +54,7 @@ export default function DocsLayout({
                 The manifesto behind UnchainedX DAO.
               </p>
             </div>
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex items-center justify-between gap-2 w-full sm:w-auto sm:shrink-0">
               <DocsMobileNav groups={groups} />
               <DocsSearch />
             </div>

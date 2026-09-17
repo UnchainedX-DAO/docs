@@ -137,7 +137,7 @@ export default function DocsSearch() {
 
       {open && (
         <div
-          className="absolute z-30 mt-2 w-72 right-0 rounded-lg overflow-hidden border border-border"
+          className="absolute z-30 mt-2 right-0 w-72 max-w-[calc(100vw-3rem)] rounded-lg overflow-hidden border border-border"
           style={{ background: "rgba(8,4,15,0.92)", backdropFilter: "blur(10px)" }}
         >
           {hits.length === 0 ? (
