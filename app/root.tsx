@@ -17,6 +17,7 @@ import Header from "~/components/dom/layout/Header";
 import MenuOverlay from "~/components/dom/layout/MenuOverlay.client";
 import Cursor from "~/components/dom/overlays/Cursor.client";
 import LoadingScreen from "~/components/dom/overlays/LoadingScreen.client";
+import NotFoundScreen from "~/screens/notfound/NotFoundScreen";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -104,10 +105,13 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
 
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    return <NotFoundScreen />;
+  }
+
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
-    details =
-      error.status === 404 ? "The requested page could not be found." : error.statusText || details;
+    message = "Error";
+    details = error.statusText || details;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message;
     stack = error.stack;

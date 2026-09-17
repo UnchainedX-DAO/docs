@@ -61,6 +61,13 @@ const DOCS: DocPage[] = [
           "Our moat is a combination lock: we undertake extraordinary complexity fundamentally and structurally, so what we build is hard to imitate — not merely hard to build.",
         ],
       },
+      {
+        id: "automation-and-incorporation",
+        heading: "Automation & incorporation",
+        paragraphs: [
+          "The DAO plans to encode as much as possible in smart contracts, and to incorporate as a legal entity.",
+        ],
+      },
     ],
   },
   {

@@ -44,7 +44,12 @@ export default function HeroScene() {
 
       {/* Main object: rotating lattice globe. 1 anchor pole stays; the other 2
           brand poles fade in/out and relocate. */}
-      <NetworkLattice position={[0, 0, -1.4]} radius={2.3} spin={0.07} persistentCount={1} />
+      <NetworkLattice
+        position={[0, 0, isMobile ? -0.9 : -1.4]}
+        radius={isMobile ? 1.2 : 2.3}
+        spin={0.07}
+        persistentCount={1}
+      />
 
       {/* Drifting particles */}
       <AtmosphericParticles
@@ -66,15 +71,26 @@ export default function HeroScene() {
       <GlitchText position={[0, 0.3, 0.5]} size={0.3} depth={0.06} emissiveIntensity={1.5}>
         UnchainedX DAO
       </GlitchText>
-      <GlitchText
-        position={[0, -0.4, 0.5]}
-        size={0.07}
-        depth={0.008}
-        emissiveIntensity={1.0}
-        glitchIntensity={0.2}
-      >
-        A DAO that experimentally researches, architects, and expands worldwide protocols and networks
-      </GlitchText>
+      {isMobile ? (
+        <>
+          <GlitchText position={[0, -0.34, 0.5]} size={0.092} depth={0.008} emissiveIntensity={1.0} glitchIntensity={0.2}>
+            A DAO that experimentally researches, architects,
+          </GlitchText>
+          <GlitchText position={[0, -0.52, 0.5]} size={0.092} depth={0.008} emissiveIntensity={1.0} glitchIntensity={0.2}>
+            and expands worldwide protocols and networks
+          </GlitchText>
+        </>
+      ) : (
+        <GlitchText
+          position={[0, -0.4, 0.5]}
+          size={0.07}
+          depth={0.008}
+          emissiveIntensity={1.0}
+          glitchIntensity={0.2}
+        >
+          A DAO that experimentally researches, architects, and expands worldwide protocols and networks
+        </GlitchText>
+      )}
 
       {/* Selective bloom on emissive (the neon glow) — same technique as uxio */}
       <HeroPostProcessing />
