@@ -3,6 +3,7 @@ import { useMatches } from "react-router";
 import { ClientOnly } from "remix-utils/client-only";
 import { type DocPage, getToc, type NavGroup } from "./content";
 import DocsBackground from "./scene/DocsBackground.client";
+import DocsMobileNav from "./ui/DocsMobileNav";
 import DocsSearch from "./ui/DocsSearch";
 import DocsSidebar from "./ui/DocsSidebar";
 import DocsToc from "./ui/DocsToc";
@@ -10,7 +11,13 @@ import DocsToc from "./ui/DocsToc";
 // Persistent docs shell: the 3D background + header + sidebar mount once; the
 // active doc (content + TOC) is swapped via <Outlet/> on navigation, so the
 // WebGPU background never re-initialises between pages.
-export default function DocsLayout({ groups, children }: { groups: NavGroup[]; children: ReactNode }) {
+export default function DocsLayout({
+  groups,
+  children,
+}: {
+  groups: NavGroup[];
+  children: ReactNode;
+}) {
   // The active doc (for the TOC) comes from the matched child route's loader
   // data. The sidebar resolves its own active link via NavLink.
   const matches = useMatches();
@@ -29,10 +36,10 @@ export default function DocsLayout({ groups, children }: { groups: NavGroup[]; c
 
       <div className="relative z-10 min-h-screen">
         <header className="pt-28 px-6 md:px-16 pb-6">
-          <div className="flex items-start justify-between gap-6">
-            <div>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="min-w-0">
               <h1
-                className="text-4xl md:text-5xl font-bold tracking-wider mb-3 neon-glow-strong"
+                className="text-3xl md:text-5xl font-bold tracking-wider mb-3 neon-glow-strong"
                 style={{ fontFamily: "Rubik, sans-serif", color: "#00F0FF" }}
               >
                 Docs
@@ -44,7 +51,10 @@ export default function DocsLayout({ groups, children }: { groups: NavGroup[]; c
                 The manifesto behind UnchainedX DAO.
               </p>
             </div>
-            <DocsSearch />
+            <div className="flex items-center gap-2 shrink-0">
+              <DocsMobileNav groups={groups} toc={toc} />
+              <DocsSearch />
+            </div>
           </div>
         </header>
 
