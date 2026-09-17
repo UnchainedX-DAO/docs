@@ -1,10 +1,10 @@
-export { default as DocsLayout } from "./DocsLayout";
-export { default as DocsArticle } from "./ui/DocsArticle";
 export {
+  type DocPage,
+  getDefaultSlug,
   getDoc,
   getDocGroups,
-  getDefaultSlug,
   getToc,
-  type DocPage,
   type NavGroup,
 } from "./content";
+export { default as DocsLayout } from "./DocsLayout";
+export { default as DocsArticle } from "./ui/DocsArticle";

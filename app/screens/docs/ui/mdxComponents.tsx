@@ -1,3 +1,4 @@
+import type { MDXComponents } from "mdx/types";
 import type { ComponentPropsWithoutRef } from "react";
 
 // Maps compiled-MDX output onto the site's neon design system using the
@@ -5,7 +6,7 @@ import type { ComponentPropsWithoutRef } from "react";
 // headings the TOC points at, so they carry the rehype-slug `id` (passed
 // through as a prop) and `scroll-mt-28` for anchored scrolling under the
 // fixed header.
-export const mdxComponents = {
+export const mdxComponents: MDXComponents = {
   h2: ({ id, children }: ComponentPropsWithoutRef<"h2">) => (
     <h2 id={id} className="scroll-mt-28 mt-6 first:mt-0 text-lg font-semibold text-neon-white">
       {children}

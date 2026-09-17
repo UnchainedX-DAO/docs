@@ -7,6 +7,7 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+import { remarkDocToc } from "./scripts/remark-doc-toc.mjs";
 
 export default defineConfig({
   plugins: [
@@ -18,7 +19,11 @@ export default defineConfig({
     {
       enforce: "pre",
       ...mdx({
-        remarkPlugins: [remarkFrontmatter, [remarkMdxFrontmatter, { name: "frontmatter" }]],
+        remarkPlugins: [
+          remarkFrontmatter,
+          [remarkMdxFrontmatter, { name: "frontmatter" }],
+          remarkDocToc,
+        ],
         rehypePlugins: [rehypeSlug],
       }),
     },
