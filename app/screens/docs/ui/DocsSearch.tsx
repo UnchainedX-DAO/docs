@@ -47,9 +47,11 @@ export default function DocsSearch() {
 
   const loadPagefind = useCallback((): Promise<PagefindModule | null> => {
     if (!pagefindRef.current) {
-      // Variable specifier: keeps TS from resolving it as a module and keeps
-      // Vite from bundling — it stays a runtime import of the static asset.
-      const src = "/pagefind/pagefind.js";
+      // Pagefind's bundle lives in /public (served at /pagefind, not part of the
+      // Vite graph). A runtime-computed absolute URL keeps Vite from statically
+      // resolving it — otherwise dev refuses to import a /public file — so it
+      // stays a genuine runtime import that both dev and Cloudflare serve.
+      const src = `${window.location.origin}/pagefind/pagefind.js`;
       pagefindRef.current = import(/* @vite-ignore */ src)
         .then(async (mod: PagefindModule) => {
           await mod.options?.({ excerptLength: 20 });
