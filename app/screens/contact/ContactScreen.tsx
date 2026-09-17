@@ -1,3 +1,6 @@
+import { ClientOnly } from "remix-utils/client-only";
+import ContactBackground from "./scene/ContactBackground.client";
+
 const SOCIAL_LINKS = [
   {
     label: "X",
@@ -22,9 +25,10 @@ const SOCIAL_LINKS = [
 export default function ContactScreen() {
   return (
     <section className="relative min-h-screen overflow-hidden flex items-center px-6 py-24 md:px-10">
-      {/* Neon accent lines */}
-      <div className="absolute left-[15%] top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-neon-cyan/10 to-transparent" />
-      <div className="absolute right-[15%] top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-neon-purple/10 to-transparent" />
+      {/* Fixed 3D background — calm "Graphite & Steel" fog */}
+      <ClientOnly fallback={<div className="fixed inset-0 bg-bg" />}>
+        {() => <ContactBackground />}
+      </ClientOnly>
 
       <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center gap-10">
         <h1 className="text-4xl md:text-6xl font-bold uppercase tracking-wider text-neon-cyan neon-glow-strong">
