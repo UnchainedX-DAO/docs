@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import type { NavGroup, TocItem } from "../content";
+import type { NavGroup } from "../content";
 import DocsNavTree from "./DocsNavTree";
 
 interface Props {
   groups: NavGroup[];
-  toc: TocItem[];
 }
 
 // Mobile-only docs navigation: a hamburger button (md:hidden) that opens a
-// left slide-in drawer containing the same nav tree as the desktop sidebar,
-// plus the current page's TOC (the right rail is hidden on mobile too). Closes
-// on backdrop tap, Esc, and any navigation (route change).
-export default function DocsMobileNav({ groups, toc }: Props) {
+// left slide-in drawer containing the same nav tree as the desktop sidebar.
+// Closes on backdrop tap, Esc, and any navigation (route change).
+export default function DocsMobileNav({ groups }: Props) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const close = () => setOpen(false);
@@ -84,24 +82,6 @@ export default function DocsMobileNav({ groups, toc }: Props) {
           style={{ background: "rgba(8,4,15,0.95)", backdropFilter: "blur(10px)" }}
         >
           <DocsNavTree groups={groups} onNavigate={close} />
-
-          {toc.length > 0 && (
-            <div className="mt-8 flex flex-col gap-2 border-t border-border pt-6">
-              <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-text-muted/60 mb-1">
-                On this page
-              </p>
-              {toc.map((item) => (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  onClick={close}
-                  className="text-text-muted hover:text-neon-cyan transition-colors duration-300 leading-snug"
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-          )}
         </nav>
       </div>
     </>

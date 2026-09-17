@@ -55,7 +55,7 @@ export default function DocsLayout({
               </p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <DocsMobileNav groups={groups} toc={toc} />
+              <DocsMobileNav groups={groups} />
               <DocsSearch />
             </div>
           </div>
