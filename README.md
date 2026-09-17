@@ -52,4 +52,4 @@ workers/app.ts   Cloudflare Worker entry
 
 ## License
 
-[MIT](./LICENSE)
+Copyright (c) 2025 UnchainedX DAO. All rights reserved. See [LICENSE](./LICENSE).
