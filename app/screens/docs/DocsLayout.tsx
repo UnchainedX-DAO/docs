@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { useMatches } from "react-router";
 import { ClientOnly } from "remix-utils/client-only";
-import { type DocPage, getToc, type NavGroup } from "./content";
+import { getDoc, getToc, type NavGroup } from "./content";
 import DocsBackground from "./scene/DocsBackground.client";
 import DocsMobileNav from "./ui/DocsMobileNav";
 import DocsSearch from "./ui/DocsSearch";
@@ -18,14 +18,17 @@ export default function DocsLayout({
   groups: NavGroup[];
   children: ReactNode;
 }) {
-  // The active doc (for the TOC) comes from the matched child route's loader
-  // data. The sidebar resolves its own active link via NavLink.
+  // The active doc (for the TOC) is resolved from the child route's serializable
+  // `slug` (never the doc itself — its Component is a function that would be
+  // stripped from loader data on the client). The sidebar resolves its own
+  // active link via NavLink.
   const matches = useMatches();
-  const doc = matches.reduce<DocPage | undefined>((acc, m) => {
-    const d = (m.data as { doc?: DocPage } | undefined)?.doc;
-    return d ?? acc;
+  const slug = matches.reduce<string | undefined>((acc, m) => {
+    const s = (m.data as { slug?: string } | undefined)?.slug;
+    return s ?? acc;
   }, undefined);
 
+  const doc = slug ? getDoc(slug) : undefined;
   const toc = doc ? getToc(doc) : [];
 
   return (
