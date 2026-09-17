@@ -19,39 +19,26 @@ const SOCIAL_LINKS = [
   },
 ] as const;
 
-export default function Footer() {
+export default function ContactScreen() {
   return (
-    <footer
-      className="relative px-6 py-16 md:px-10 md:py-24 min-h-screen overflow-hidden flex items-center"
-      style={{
-        background: "rgba(0, 0, 0, 0.75)",
-        backdropFilter: "blur(12px)",
-      }}
-    >
-      {/* Neon accent lines — matching menu overlay style */}
+    <section className="relative min-h-screen overflow-hidden flex items-center px-6 py-24 md:px-10">
+      {/* Neon accent lines */}
       <div className="absolute left-[15%] top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-neon-cyan/10 to-transparent" />
       <div className="absolute right-[15%] top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-neon-purple/10 to-transparent" />
 
-      {/* Top border glow */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-cyan/30 to-transparent" />
-
-      <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center space-y-10">
-        {/* GET IN TOUCH */}
-        <h2 data-footer-item className="text-3xl md:text-5xl font-bold uppercase tracking-wider text-neon-cyan neon-glow-strong">
+      <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center gap-10">
+        <h1 className="text-4xl md:text-6xl font-bold uppercase tracking-wider text-neon-cyan neon-glow-strong">
           Get In Touch
-        </h2>
+        </h1>
 
-        {/* Email */}
         <a
-          data-footer-item
           href="mailto:hello@unchainedxdao.io"
           className="text-lg md:text-xl text-text-muted neon-glow hover:text-neon-purple hover:neon-glow-purple transition-all duration-500"
         >
           hello@unchainedxdao.io
         </a>
 
-        {/* Social links */}
-        <div data-footer-item className="flex gap-6">
+        <div className="flex gap-6">
           {SOCIAL_LINKS.map((link) => (
             <a
               key={link.label}
@@ -66,11 +53,8 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Copyright */}
-        <p data-footer-item className="text-xs text-text-muted pt-8">
-          © 2026 UnchainedX DAO
-        </p>
+        <p className="text-xs text-text-muted pt-8">© 2026 UnchainedX DAO</p>
       </div>
-    </footer>
+    </section>
   );
 }

@@ -1,5 +1,4 @@
 import { ClientOnly } from "remix-utils/client-only";
-import Footer from "~/components/dom/layout/Footer";
 import HeroScene from "./scene/HeroScene.client";
 
 // Hero-only landing: a 3D-text hero (title + tagline) over the unchainedx.io
@@ -12,8 +11,6 @@ export default function HomeScreen() {
           {() => <HeroScene />}
         </ClientOnly>
       </section>
-
-      <Footer />
     </>
   );
 }

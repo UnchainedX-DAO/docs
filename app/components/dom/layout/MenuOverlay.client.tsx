@@ -10,6 +10,7 @@ interface MenuOverlayProps {
 const MENU_ITEMS = [
   { label: "Portfolio", to: "/portfolio" },
   { label: "Docs", to: "/docs" },
+  { label: "Contact", to: "/contact" },
 ] as const;
 
 export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {

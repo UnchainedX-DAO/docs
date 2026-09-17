@@ -62,11 +62,16 @@ export default function App() {
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
   const handleLoadComplete = useCallback(() => setShowLoading(false), []);
 
-  // Show LoadingScreen on every route change
+  // Show LoadingScreen on route changes — except navigation *within* /docs,
+  // where the layout (and its WebGPU background) persists, so a full loading
+  // overlay would be jarring for sidebar link clicks.
   useEffect(() => {
-    if (location.pathname !== prevPathRef.current) {
-      prevPathRef.current = location.pathname;
-      setShowLoading(true);
+    const prev = prevPathRef.current;
+    const next = location.pathname;
+    if (next !== prev) {
+      prevPathRef.current = next;
+      const withinDocs = prev.startsWith("/docs") && next.startsWith("/docs");
+      if (!withinDocs) setShowLoading(true);
       setIsMenuOpen(false);
       window.scrollTo({ top: 0, behavior: "instant" });
       document.documentElement.scrollTop = 0;
