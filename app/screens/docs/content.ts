@@ -5,13 +5,12 @@
 // already consume: getDoc / getDocGroups / getDefaultSlug / getToc are
 // unchanged in shape, only their source moved.
 import GithubSlugger from "github-slugger";
+import type { MDXComponents } from "mdx/types";
 import type { ComponentType } from "react";
 
 // A compiled MDX page component. It accepts a `components` map so we can style
 // its output with our neon element set (see ui/mdxComponents).
-export type DocComponent = ComponentType<{
-  components?: Record<string, ComponentType<Record<string, unknown>> | keyof JSX.IntrinsicElements>;
-}>;
+export type DocComponent = ComponentType<{ components?: MDXComponents }>;
 
 export interface DocPage {
   slug: string; // → /docs/<slug>
@@ -54,7 +53,12 @@ const RAW = import.meta.glob<string>("../../content/*.mdx", {
 });
 
 function slugFromPath(path: string): string {
-  return path.split("/").pop()?.replace(/\.mdx$/, "") ?? path;
+  return (
+    path
+      .split("/")
+      .pop()
+      ?.replace(/\.mdx$/, "") ?? path
+  );
 }
 
 function stripFrontmatter(raw: string): string {

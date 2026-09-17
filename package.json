@@ -3,7 +3,8 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"build": "react-router build",
+		"build": "bun run search-index && react-router build",
+		"search-index": "node scripts/build-search-index.mjs",
 		"cf-typegen": "wrangler types",
 		"deploy": "bun run build && wrangler deploy",
 		"dev": "react-router dev",

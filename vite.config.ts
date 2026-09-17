@@ -1,5 +1,5 @@
-import mdx from "@mdx-js/rollup";
 import { cloudflare } from "@cloudflare/vite-plugin";
+import mdx from "@mdx-js/rollup";
 import { reactRouter } from "@react-router/dev/vite";
 import tailwindcss from "@tailwindcss/vite";
 import rehypeSlug from "rehype-slug";
