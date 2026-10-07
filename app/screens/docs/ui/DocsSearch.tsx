@@ -4,7 +4,7 @@ import { searchDocs } from "../content";
 
 // Docs search. Primary path is Pagefind (full-text, lazy-loaded from the static
 // /pagefind bundle produced by scripts/build-search-index.mjs). If that bundle
-// is unavailable (e.g. dev before `bun run search-index`), it silently falls
+// is unavailable (e.g. dev before `pnpm run search-index`), it silently falls
 // back to the in-memory searchDocs over the registry. Both are normalised to
 // one Hit shape so the dropdown renders uniformly.
 interface Hit {

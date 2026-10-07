@@ -102,7 +102,7 @@ export interface SearchResult {
 
 // In-memory search fallback over page titles and section headings. Used only
 // when the Pagefind client index is unavailable (e.g. dev before
-// `bun run search-index`). Pagefind provides full-text search as the primary
+// `pnpm run search-index`). Pagefind provides full-text search as the primary
 // path in DocsSearch.
 export function searchDocs(query: string): SearchResult[] {
   const q = query.trim().toLowerCase();
