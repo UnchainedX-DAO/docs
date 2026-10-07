@@ -4,8 +4,8 @@ import {
   color,
   dot,
   emissive,
-  float,
   Fn,
+  float,
   fract,
   mix,
   mrt,
@@ -21,6 +21,7 @@ import {
 import * as THREE from "three/webgpu";
 import WebGPUCanvas from "~/components/three/canvas/WebGPUCanvas.client";
 import GlitchText from "~/components/three/effects/GlitchText";
+import { useSceneReady } from "~/components/three/post/useSceneReady";
 import { bloom } from "~/components/three/tsl/BloomNode.js";
 
 // 404 scene: the same top-page fog shimmer with a quiet 3D "404 · not found".
@@ -32,7 +33,13 @@ export default function NotFoundScene() {
       <ambientLight intensity={0.1} />
       <pointLight position={[0, 4, 3]} intensity={2} color="#00F0FF" distance={30} decay={2} />
       <Fog />
-      <GlitchText position={[0, 0, 0.5]} size={0.16} depth={0.03} emissiveIntensity={0.9} glitchIntensity={0.2}>
+      <GlitchText
+        position={[0, 0, 0.5]}
+        size={0.16}
+        depth={0.03}
+        emissiveIntensity={0.9}
+        glitchIntensity={0.2}
+      >
         404 not found
       </GlitchText>
       <Post />
@@ -43,6 +50,7 @@ export default function NotFoundScene() {
 function Post({ strength = 1.0, radius = 0.4 }) {
   const { gl, scene, camera, size } = useThree();
   const ref = useRef<THREE.RenderPipeline | null>(null);
+  const onRendered = useSceneReady(ref);
   useEffect(() => {
     const renderer = gl as unknown as THREE.WebGPURenderer;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -51,14 +59,18 @@ function Post({ strength = 1.0, radius = 0.4 }) {
     scenePass.setMRT(mrt({ output, emissive: vec4(emissive, output.a) }));
     scenePass.getTexture("emissive").type = THREE.UnsignedByteType;
     const pipeline = new THREE.RenderPipeline(renderer);
-    pipeline.outputNode = scenePass.getTextureNode().add(bloom(scenePass.getTextureNode("emissive"), strength, radius));
+    pipeline.outputNode = scenePass
+      .getTextureNode()
+      .add(bloom(scenePass.getTextureNode("emissive"), strength, radius));
     ref.current = pipeline;
     return () => {
       ref.current = null;
     };
   }, [gl, scene, camera, size, strength, radius]);
   useFrame(() => {
-    ref.current?.renderAsync();
+    if (!ref.current) return;
+    ref.current.renderAsync();
+    onRendered();
   }, 1);
   return null;
 }
@@ -87,8 +99,14 @@ function Fog() {
     const p = positionLocal;
     const t = uTime;
     const heightMix = p.y.div(30).add(0.5);
-    const in1 = vec2(p.x.mul(0.25).add(t.mul(0.15)), p.z.mul(0.25).add(p.y.mul(0.1)).add(t.mul(0.12)));
-    const in2 = vec2(p.z.mul(0.2).sub(t.mul(0.1)), p.y.mul(0.2).add(p.x.mul(0.15)).sub(t.mul(0.13)));
+    const in1 = vec2(
+      p.x.mul(0.25).add(t.mul(0.15)),
+      p.z.mul(0.25).add(p.y.mul(0.1)).add(t.mul(0.12)),
+    );
+    const in2 = vec2(
+      p.z.mul(0.2).sub(t.mul(0.1)),
+      p.y.mul(0.2).add(p.x.mul(0.15)).sub(t.mul(0.13)),
+    );
     const n1 = fbm(in1);
     const n2 = fbm(in2);
     const warped = fbm(in2.add(vec2(n1.mul(1.8), n1.mul(1.4))));

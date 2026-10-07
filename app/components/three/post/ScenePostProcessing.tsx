@@ -1,8 +1,9 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
+import { emissive, mrt, output, pass, vec4 } from "three/tsl";
 import * as THREE from "three/webgpu";
 import { bloom } from "~/components/three/tsl/BloomNode.js";
-import { emissive, mrt, output, pass, vec4 } from "three/tsl";
+import { useSceneReady } from "./useSceneReady";
 
 interface ScenePostProcessingProps {
   bloomStrength?: number;
@@ -15,6 +16,7 @@ export default function ScenePostProcessing({
 }: ScenePostProcessingProps) {
   const { gl, scene, camera } = useThree();
   const pipelineRef = useRef<THREE.RenderPipeline | null>(null);
+  const onRendered = useSceneReady(pipelineRef);
 
   useEffect(() => {
     const renderer = gl as unknown as THREE.WebGPURenderer;
@@ -34,11 +36,15 @@ export default function ScenePostProcessing({
     pipeline.outputNode = outputPass.add(bloomNode);
     pipelineRef.current = pipeline;
 
-    return () => { pipelineRef.current = null; };
+    return () => {
+      pipelineRef.current = null;
+    };
   }, [gl, scene, camera, bloomStrength, bloomRadius]);
 
   useFrame(() => {
-    pipelineRef.current?.renderAsync();
+    if (!pipelineRef.current) return;
+    pipelineRef.current.renderAsync();
+    onRendered();
   }, 1);
 
   return null;

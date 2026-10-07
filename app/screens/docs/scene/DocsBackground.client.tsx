@@ -3,8 +3,8 @@ import { useMemo } from "react";
 import {
   color,
   dot,
-  float,
   Fn,
+  float,
   fract,
   mix,
   positionLocal,
@@ -16,6 +16,7 @@ import {
 } from "three/tsl";
 import WebGPUCanvas from "~/components/three/canvas/WebGPUCanvas.client";
 import AtmosphericParticles from "~/components/three/effects/AtmosphericParticles";
+import SceneReadySignal from "~/components/three/post/SceneReadySignal";
 
 // Fixed full-viewport background for /docs: the unchainedx HeroFog shimmer with
 // an added "Aurora Veil" (drifting cyan↔magenta sheets = study concept A6).
@@ -26,6 +27,7 @@ export default function DocsBackground() {
 
   return (
     <WebGPUCanvas className="!fixed inset-0 z-0" dpr={isMobile ? [1, 1] : [1, 1.5]}>
+      <SceneReadySignal />
       <fog attach="fog" args={["#0f0825", 15, 50]} />
 
       <ambientLight intensity={0.1} />
@@ -35,8 +37,20 @@ export default function DocsBackground() {
 
       <AuroraFog />
 
-      <AtmosphericParticles count={80} color="#00F0FF" size={0.014} speed={0.05} area={[25, 15, 30]} />
-      <AtmosphericParticles count={44} color="#BF00FF" size={0.012} speed={0.045} area={[20, 12, 25]} />
+      <AtmosphericParticles
+        count={80}
+        color="#00F0FF"
+        size={0.014}
+        speed={0.05}
+        area={[25, 15, 30]}
+      />
+      <AtmosphericParticles
+        count={44}
+        color="#BF00FF"
+        size={0.012}
+        speed={0.045}
+        area={[20, 12, 25]}
+      />
     </WebGPUCanvas>
   );
 }
@@ -96,7 +110,9 @@ function AuroraFog() {
 
     const cyanWisp = vec3(float(0.0), float(0.6), float(0.7)).mul(fog).mul(0.13);
     const purpleWisp = vec3(float(0.4), float(0.0), float(0.5)).mul(n2).mul(0.1);
-    const amberWisp = vec3(float(0.6), float(0.3), float(0.0)).mul(warped.sub(0.4).max(0)).mul(0.13);
+    const amberWisp = vec3(float(0.6), float(0.3), float(0.0))
+      .mul(warped.sub(0.4).max(0))
+      .mul(0.13);
     const whiteHaze = vec3(float(0.7), float(0.65), float(0.75)).mul(fog.sub(0.4).max(0)).mul(0.15);
 
     // --- Aurora Veil (A6): drifting cyan↔magenta sheets with vertical falloff ---

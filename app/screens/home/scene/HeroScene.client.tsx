@@ -4,8 +4,8 @@ import {
   color,
   dot,
   emissive,
-  float,
   Fn,
+  float,
   fract,
   mix,
   mrt,
@@ -23,6 +23,7 @@ import WebGPUCanvas from "~/components/three/canvas/WebGPUCanvas.client";
 import AtmosphericParticles from "~/components/three/effects/AtmosphericParticles";
 import GlitchText from "~/components/three/effects/GlitchText";
 import NetworkLattice from "~/components/three/effects/NetworkLattice";
+import { useSceneReady } from "~/components/three/post/useSceneReady";
 import { bloom } from "~/components/three/tsl/BloomNode.js";
 
 export default function HeroScene() {
@@ -73,10 +74,22 @@ export default function HeroScene() {
       </GlitchText>
       {isMobile ? (
         <>
-          <GlitchText position={[0, -0.34, 0.5]} size={0.092} depth={0.008} emissiveIntensity={1.0} glitchIntensity={0.2}>
+          <GlitchText
+            position={[0, -0.34, 0.5]}
+            size={0.092}
+            depth={0.008}
+            emissiveIntensity={1.0}
+            glitchIntensity={0.2}
+          >
             A DAO that experimentally researches, architects,
           </GlitchText>
-          <GlitchText position={[0, -0.52, 0.5]} size={0.092} depth={0.008} emissiveIntensity={1.0} glitchIntensity={0.2}>
+          <GlitchText
+            position={[0, -0.52, 0.5]}
+            size={0.092}
+            depth={0.008}
+            emissiveIntensity={1.0}
+            glitchIntensity={0.2}
+          >
             and expands worldwide protocols and networks
           </GlitchText>
         </>
@@ -88,7 +101,8 @@ export default function HeroScene() {
           emissiveIntensity={1.0}
           glitchIntensity={0.2}
         >
-          A DAO that experimentally researches, architects, and expands worldwide protocols and networks
+          A DAO that experimentally researches, architects, and expands worldwide protocols and
+          networks
         </GlitchText>
       )}
 
@@ -103,6 +117,7 @@ export default function HeroScene() {
 function HeroPostProcessing({ strength = 1.2, radius = 0.4, exposure = 1.0 }) {
   const { gl, scene, camera, size } = useThree();
   const pipelineRef = useRef<THREE.RenderPipeline | null>(null);
+  const onRendered = useSceneReady(pipelineRef);
 
   useEffect(() => {
     const renderer = gl as unknown as THREE.WebGPURenderer;
@@ -128,7 +143,9 @@ function HeroPostProcessing({ strength = 1.2, radius = 0.4, exposure = 1.0 }) {
 
   // Priority > 0 takes over rendering from R3F's auto-render.
   useFrame(() => {
-    pipelineRef.current?.renderAsync();
+    if (!pipelineRef.current) return;
+    pipelineRef.current.renderAsync();
+    onRendered();
   }, 1);
 
   return null;
@@ -190,7 +207,9 @@ function HeroFog() {
 
     const cyanWisp = vec3(float(0.0), float(0.6), float(0.7)).mul(fog).mul(0.13);
     const purpleWisp = vec3(float(0.4), float(0.0), float(0.5)).mul(n2).mul(0.1);
-    const amberWisp = vec3(float(0.6), float(0.3), float(0.0)).mul(warped.sub(0.4).max(0)).mul(0.13);
+    const amberWisp = vec3(float(0.6), float(0.3), float(0.0))
+      .mul(warped.sub(0.4).max(0))
+      .mul(0.13);
     const whiteHaze = vec3(float(0.7), float(0.65), float(0.75)).mul(fog.sub(0.4).max(0)).mul(0.15);
 
     return baseColor.add(cyanWisp).add(purpleWisp).add(amberWisp).add(whiteHaze);

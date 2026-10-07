@@ -3,8 +3,8 @@ import { useMemo } from "react";
 import {
   color,
   dot,
-  float,
   Fn,
+  float,
   fract,
   mix,
   positionLocal,
@@ -15,6 +15,7 @@ import {
 } from "three/tsl";
 import WebGPUCanvas from "~/components/three/canvas/WebGPUCanvas.client";
 import AtmosphericParticles from "~/components/three/effects/AtmosphericParticles";
+import SceneReadySignal from "~/components/three/post/SceneReadySignal";
 
 // Fixed full-viewport background for /contact: the same fbm domain-warp shimmer
 // as the rest of the site, but a calmer, company-leaning palette — "Graphite &
@@ -24,9 +25,16 @@ export default function ContactBackground() {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   return (
     <WebGPUCanvas className="!fixed inset-0 z-0" dpr={isMobile ? [1, 1] : [1, 1.5]}>
+      <SceneReadySignal />
       <fog attach="fog" args={["#0d0f14", 15, 50]} />
       <SteelFog />
-      <AtmosphericParticles count={40} color="#5a8a96" size={0.012} speed={0.04} area={[24, 14, 28]} />
+      <AtmosphericParticles
+        count={40}
+        color="#5a8a96"
+        size={0.012}
+        speed={0.04}
+        area={[24, 14, 28]}
+      />
     </WebGPUCanvas>
   );
 }
