@@ -233,12 +233,18 @@ importers:
       '@types/three':
         specifier: ^0.186.0
         version: 0.186.0
+      estree-util-value-to-estree:
+        specifier: ^3.5.0
+        version: 3.5.0
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
+      mdast-util-to-string:
+        specifier: ^4.0.0
+        version: 4.0.0
       pagefind:
         specifier: ^1.5.2
         version: 1.5.2
@@ -260,6 +266,9 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+      unist-util-visit:
+        specifier: ^5.1.0
+        version: 5.1.0
       vite:
         specifier: ^7.3.6
         version: 7.3.7(@types/node@22.20.5)(jiti@2.7.0)(lightningcss@1.32.0)(tsx@4.23.15)(yaml@2.9.1)
