@@ -3,6 +3,7 @@
   "name": "docs",
   "compatibility_date": "2025-04-04",
   "main": "./workers/app.ts",
+  "workers_dev": false,
   "observability": {
     "enabled": false,
     "head_sampling_rate": 1,
