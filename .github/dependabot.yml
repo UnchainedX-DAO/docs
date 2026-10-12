@@ -1,0 +1,21 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 10
+    groups:
+      react-router:
+        patterns:
+          - "react-router"
+          - "@react-router/*"
+      three:
+        patterns:
+          - "three"
+          - "@types/three"
+          - "@react-three/*"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
